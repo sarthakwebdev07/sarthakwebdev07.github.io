@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="sarthak_webdev — Learn JavaScript, C++, and Python with beginner-friendly tutorials, code examples, and complete guides."/>
+  <meta name="keywords" content="JavaScript tutorial, C++ tutorial, Python tutorial, learn programming, coding for beginners"/>
+  <meta name="author" content="sarthak_webdev"/>
+  <!-- Open Graph for sharing -->
+  <meta property="og:title" content="sarthak_webdev — Learn to Code"/>
+  <meta property="og:description" content="Complete guides on JavaScript, C++, and Python for beginners and beyond."/>
+  <meta property="og:type" content="website"/>
+  <title>sarthak_webdev — Learn JavaScript, C++ & Python</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0D1117;
+      --surface:#161B22;
+      --border:#21262D;
+      --cyan:#58A6FF;
+      --yellow:#E3B341;
+      --green:#3FB950;
+      --purple:#BC8CFF;
+      --red:#F85149;
+      --text:#E6EDF3;
+      --muted:#8B949E;
+      --card:#1C2128;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6}
+
+    /* NAV */
+    nav{
+      position:sticky;top:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1rem 5%;
+      background:rgba(13,17,23,0.92);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .logo{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--cyan);text-decoration:none}
+    .logo span{color:var(--muted)}
+    .nav-links{display:flex;gap:1.8rem;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--muted);font-size:0.88rem;font-weight:500;transition:color .2s}
+    .nav-links a:hover{color:var(--text)}
+    .nav-search{
+      font-family:'JetBrains Mono',monospace;font-size:0.78rem;
+      background:var(--surface);border:1px solid var(--border);
+      color:var(--muted);padding:0.4rem 1rem;cursor:pointer;
+      transition:border-color .2s
+    }
+    .nav-search:hover{border-color:var(--cyan);color:var(--text)}
+
+    /* HERO */
+    #hero{
+      padding:5rem 5% 4rem;
+      border-bottom:1px solid var(--border);
+      display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center
+    }
+    .hero-badge{
+      display:inline-block;
+      font-family:'JetBrains Mono',monospace;font-size:0.72rem;
+      background:rgba(88,166,255,0.1);border:1px solid rgba(88,166,255,0.25);
+      color:var(--cyan);padding:0.3rem 0.8rem;margin-bottom:1.2rem;
+      letter-spacing:0.08em;text-transform:uppercase
+    }
+    h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.1;letter-spacing:-0.03em;margin-bottom:1rem}
+    h1 em{font-style:normal;color:var(--cyan)}
+    .hero-sub{color:var(--muted);max-width:460px;margin-bottom:2rem;line-height:1.8}
+    .lang-pills{display:flex;gap:0.8rem;flex-wrap:wrap}
+    .pill{
+      font-family:'JetBrains Mono',monospace;font-size:0.8rem;
+      padding:0.5rem 1.2rem;border:1px solid;cursor:pointer;text-decoration:none;
+      transition:background .2s,transform .15s;display:inline-block
+    }
+    .pill:hover{transform:translateY(-2px)}
+    .pill-js{color:var(--yellow);border-color:rgba(227,179,65,0.3)}
+    .pill-js:hover{background:rgba(227,179,65,0.1)}
+    .pill-cpp{color:var(--purple);border-color:rgba(188,140,255,0.3)}
+    .pill-cpp:hover{background:rgba(188,140,255,0.1)}
+    .pill-py{color:var(--green);border-color:rgba(63,185,80,0.3)}
+    .pill-py:hover{background:rgba(63,185,80,0.1)}
+
+    /* Code window widget */
+    .code-window{background:var(--surface);border:1px solid var(--border);overflow:hidden}
+    .code-titlebar{
+      display:flex;align-items:center;gap:0.5rem;
+      padding:0.7rem 1rem;border-bottom:1px solid var(--border);
+      background:var(--card)
+    }
+    .dot{width:12px;height:12px;border-radius:50%}
+    .dot-r{background:#F85149}.dot-y{background:#E3B341}.dot-g{background:#3FB950}
+    .code-file{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);margin-left:auto}
+    pre{padding:1.4rem;font-family:'JetBrains Mono',monospace;font-size:0.82rem;line-height:1.7;overflow-x:auto}
+    .kw{color:#FF7B72}.fn{color:#D2A8FF}.str{color:#A5D6FF}.cm{color:#8B949E}.num{color:#79C0FF}.op{color:#FF7B72}
+
+    /* MAIN LAYOUT */
+    .main-wrap{display:grid;grid-template-columns:240px 1fr;gap:0;min-height:80vh}
+
+    /* SIDEBAR */
+    aside{
+      border-right:1px solid var(--border);
+      padding:2rem 1.2rem;
+      position:sticky;top:57px;height:calc(100vh - 57px);
+      overflow-y:auto
+    }
+    .sidebar-section{margin-bottom:2rem}
+    .sidebar-label{
+      font-family:'JetBrains Mono',monospace;font-size:0.68rem;
+      text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);
+      margin-bottom:0.8rem;padding-bottom:0.4rem;
+      border-bottom:1px solid var(--border)
+    }
+    .sidebar-link{
+      display:block;text-decoration:none;color:var(--muted);
+      font-size:0.85rem;padding:0.35rem 0.6rem;margin-bottom:0.1rem;
+      border-left:2px solid transparent;transition:all .15s
+    }
+    .sidebar-link:hover{color:var(--text);border-left-color:var(--cyan);background:rgba(88,166,255,0.05)}
+    .sidebar-link.active{color:var(--cyan);border-left-color:var(--cyan);background:rgba(88,166,255,0.08)}
+    .sidebar-link .lang-dot{
+      display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px
+    }
+
+    /* CONTENT */
+    main{padding:2.5rem 3rem}
+    .lang-section{display:none}
+    .lang-section.visible{display:block}
+
+    /* Article header */
+    .article-header{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+    .article-tag{
+      font-family:'JetBrains Mono',monospace;font-size:0.72rem;
+      text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem;display:inline-block
+    }
+    .tag-js{color:var(--yellow)}.tag-cpp{color:var(--purple)}.tag-py{color:var(--green)}
+    h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:0.6rem}
+    .article-meta{color:var(--muted);font-size:0.82rem}
+    .article-meta span{margin-right:1.2rem}
+
+    /* Content typography */
+    .content h3{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:600;margin:2.2rem 0 0.8rem;color:var(--text)}
+    .content p{color:#C9D1D9;line-height:1.85;margin-bottom:1.1rem}
+    .content ul,.content ol{color:#C9D1D9;padding-left:1.5rem;margin-bottom:1.1rem}
+    .content li{margin-bottom:0.4rem;line-height:1.7}
+    .content strong{color:var(--text);font-weight:600}
+    .inline-code{
+      font-family:'JetBrains Mono',monospace;font-size:0.82em;
+      background:rgba(110,118,129,0.15);border:1px solid var(--border);
+      padding:0.1em 0.4em;color:var(--cyan)
+    }
+
+    /* Code blocks */
+    .code-block{margin:1.5rem 0;border:1px solid var(--border)}
+    .code-block-header{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:0.5rem 1rem;background:var(--card);border-bottom:1px solid var(--border);
+      font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted)
+    }
+    .copy-btn{
+      background:none;border:1px solid var(--border);color:var(--muted);
+      font-family:'JetBrains Mono',monospace;font-size:0.68rem;
+      padding:0.2rem 0.6rem;cursor:pointer;transition:all .15s
+    }
+    .copy-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+    .code-block pre{padding:1.2rem;font-size:0.82rem}
+
+    /* Info boxes */
+    .info-box{
+      border-left:3px solid;padding:1rem 1.2rem;margin:1.5rem 0;
+      font-size:0.9rem;line-height:1.7
+    }
+    .info-box.tip{border-color:var(--green);background:rgba(63,185,80,0.06);color:#C9D1D9}
+    .info-box.warn{border-color:var(--yellow);background:rgba(227,179,65,0.06);color:#C9D1D9}
+    .info-box .info-label{font-weight:700;margin-bottom:0.3rem;display:block}
+    .info-box.tip .info-label{color:var(--green)}
+    .info-box.warn .info-label{color:var(--yellow)}
+
+    /* Table of contents */
+    .toc{
+      background:var(--surface);border:1px solid var(--border);
+      padding:1.2rem 1.5rem;margin-bottom:2rem;font-size:0.88rem
+    }
+    .toc-title{font-family:'Space Grotesk',sans-serif;font-weight:600;margin-bottom:0.8rem}
+    .toc ol{padding-left:1.2rem}
+    .toc a{color:var(--cyan);text-decoration:none}
+    .toc a:hover{text-decoration:underline}
+
+    /* FOOTER */
+    footer{
+      border-top:1px solid var(--border);
+      padding:2rem 5%;
+      display:flex;justify-content:space-between;align-items:center;
+      font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--muted)
+    }
+    footer a{color:var(--cyan);text-decoration:none}
+
+    /* Mobile */
+    .mobile-lang-bar{display:none;gap:0.6rem;padding:1rem 5%;border-bottom:1px solid var(--border);overflow-x:auto}
+
+    @media(max-width:900px){
+      #hero{grid-template-columns:1fr;gap:2rem}
+      .main-wrap{grid-template-columns:1fr}
+      aside{display:none}
+      .mobile-lang-bar{display:flex}
+      main{padding:1.5rem 5%}
+      footer{flex-direction:column;gap:0.5rem;text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">sarthak<span>_webdev</span></a>
+  <ul class="nav-links">
+    <li><a href="#js-section" onclick="showLang('js')">JavaScript</a></li>
+    <li><a href="#cpp-section" onclick="showLang('cpp')">C++</a></li>
+    <li><a href="#py-section" onclick="showLang('py')">Python</a></li>
+  </ul>
+  <button class="nav-search" onclick="alert('Search coming soon!')">⌘ Search</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div>
+    <div class="hero-badge">Free Programming Tutorials</div>
+    <h1>Learn to Code.<br/>Build <em>Real Things.</em></h1>
+    <p class="hero-sub">Complete beginner-to-advanced guides on JavaScript, C++, and Python — with real code examples, clear explanations, and zero fluff.</p>
+    <div class="lang-pills">
+      <a href="#" class="pill pill-js" onclick="showLang('js');return false;">⚡ JavaScript</a>
+      <a href="#" class="pill pill-cpp" onclick="showLang('cpp');return false;">🔷 C++</a>
+      <a href="#" class="pill pill-py" onclick="showLang('py');return false;">🐍 Python</a>
+    </div>
+  </div>
+  <div class="code-window">
+    <div class="code-titlebar">
+      <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
+      <span class="code-file">hello_world.js</span>
+    </div>
+    <pre><span class="cm">// Your first line of code 🚀</span>
+<span class="kw">function</span> <span class="fn">greet</span>(name) {
+  <span class="kw">return</span> <span class="str">`Hello, <span class="op">${</span>name<span class="op">}</span>! Welcome to coding.`</span>;
+}
+
+<span class="kw">const</span> message = <span class="fn">greet</span>(<span class="str">"World"</span>);
+console.<span class="fn">log</span>(message);
+
+<span class="cm">// Output: Hello, World! Welcome to coding.</span></pre>
+  </div>
+</section>
+
+<!-- MOBILE LANG BAR -->
+<div class="mobile-lang-bar">
+  <a href="#" class="pill pill-js" onclick="showLang('js');return false;">⚡ JS</a>
+  <a href="#" class="pill pill-cpp" onclick="showLang('cpp');return false;">🔷 C++</a>
+  <a href="#" class="pill pill-py" onclick="showLang('py');return false;">🐍 Python</a>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="sidebar-section">
+      <div class="sidebar-label">JavaScript</div>
+      <a href="#" class="sidebar-link active" onclick="showLang('js');return false;"><span class="lang-dot" style="background:#E3B341"></span>Introduction</a>
+      <a href="#js-variables" class="sidebar-link"><span class="lang-dot" style="background:#E3B341"></span>Variables & Data Types</a>
+      <a href="#js-functions" class="sidebar-link"><span class="lang-dot" style="background:#E3B341"></span>Functions</a>
+      <a href="#js-dom" class="sidebar-link"><span class="lang-dot" style="background:#E3B341"></span>DOM Manipulation</a>
+      <a href="#js-async" class="sidebar-link"><span class="lang-dot" style="background:#E3B341"></span>Async / Promises</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">C++</div>
+      <a href="#" class="sidebar-link" onclick="showLang('cpp');return false;"><span class="lang-dot" style="background:#BC8CFF"></span>Introduction</a>
+      <a href="#cpp-syntax" class="sidebar-link"><span class="lang-dot" style="background:#BC8CFF"></span>Syntax & Structure</a>
+      <a href="#cpp-pointers" class="sidebar-link"><span class="lang-dot" style="background:#BC8CFF"></span>Pointers & Memory</a>
+      <a href="#cpp-oop" class="sidebar-link"><span class="lang-dot" style="background:#BC8CFF"></span>OOP & Classes</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Python</div>
+      <a href="#" class="sidebar-link" onclick="showLang('py');return false;"><span class="lang-dot" style="background:#3FB950"></span>Introduction</a>
+      <a href="#py-syntax" class="sidebar-link"><span class="lang-dot" style="background:#3FB950"></span>Syntax & Basics</a>
+      <a href="#py-lists" class="sidebar-link"><span class="lang-dot" style="background:#3FB950"></span>Lists & Dictionaries</a>
+      <a href="#py-oop" class="sidebar-link"><span class="lang-dot" style="background:#3FB950"></span>OOP in Python</a>
+    </div>
+  </aside>
+
+  <!-- CONTENT AREA -->
+  <main>
+
+    <!-- ══ JAVASCRIPT ══ -->
+    <div id="js-section" class="lang-section visible">
+      <div class="article-header">
+        <span class="article-tag tag-js">⚡ JavaScript</span>
+        <h2>JavaScript: The Complete Beginner's Guide</h2>
+        <div class="article-meta">
+          <span>By sarthak_webdev</span>
+          <span>June 2026</span>
+          <span>~15 min read</span>
+        </div>
+      </div>
+
+      <div class="toc">
+        <div class="toc-title">📋 Table of Contents</div>
+        <ol>
+          <li><a href="#js-what">What is JavaScript?</a></li>
+          <li><a href="#js-variables">Variables & Data Types</a></li>
+          <li><a href="#js-functions">Functions</a></li>
+          <li><a href="#js-dom">DOM Manipulation</a></li>
+          <li><a href="#js-async">Async Programming</a></li>
+        </ol>
+      </div>
+
+      <div class="content">
+        <h3 id="js-what">What is JavaScript?</h3>
+        <p>JavaScript is the <strong>programming language of the web</strong>. Every interactive element you see on a website — buttons that respond to clicks, forms that validate input, menus that slide open — JavaScript powers all of it.</p>
+        <p>Originally created in 1995, JavaScript has grown into one of the most popular programming languages in the world. Today it runs not just in browsers, but on servers (Node.js), mobile apps, and even desktop software.</p>
+
+        <div class="info-box tip">
+          <span class="info-label">💡 Why learn JavaScript first?</span>
+          JavaScript is the only language that runs natively in every browser. If you want to build websites or web apps, JavaScript is non-negotiable — making it the best starting point for most beginners.
+        </div>
+
+        <h3 id="js-variables">Variables & Data Types</h3>
+        <p>A <strong>variable</strong> is a container that stores data. In modern JavaScript, you declare variables using <span class="inline-code">let</span>, <span class="inline-code">const</span>, or <span class="inline-code">var</span>.</p>
+
+        <div class="code-block">
+          <div class="code-block-header"><span>variables.js</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm">// const — value cannot be reassigned</span>
+<span class="kw">const</span> name = <span class="str">"Sarthak"</span>;
+<span class="kw">const</span> age = <span class="num">22</span>;
+<span class="kw">const</span> isDeveloper = <span class="kw">true</span>;
+
+<span class="cm">// let — value can change</span>
+<span class="kw">let</span> score = <span class="num">0</span>;
+score = <span class="num">100</span>; <span class="cm">// ✅ allowed</span>
+
+<span class="cm">// JavaScript Data Types</span>
+<span class="kw">const</span> text    = <span class="str">"Hello"</span>;      <span class="cm">// String</span>
+<span class="kw">const</span> number  = <span class="num">42</span>;          <span class="cm">// Number</span>
+<span class="kw">const</span> flag    = <span class="kw">true</span>;        <span class="cm">// Boolean</span>
+<span class="kw">const</span> nothing = <span class="kw">null</span>;        <span class="cm">// Null</span>
+<span class="kw">const</span> arr     = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>];   <span class="cm">// Array</span>
+<span class="kw">const</span> obj     = { x: <span class="num">10</span> };   <span class="cm">// Object</span></pre>
+        </div>
+
+        <h3 id="js-functions">Functions</h3>
+        <p>Functions are reusable blocks of code. You define a function once and call it as many times as you need. JavaScript offers several ways to write functions:</p>
+
+        <div class="code-block">
+          <div class="code-block-header"><span>functions.js</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm">// 1. Regular function</span>
+<span class="kw">function</span> <span class="fn">add</span>(a, b) {
+  <span class="kw">return</span> a + b;
+}
+
+<span class="cm">// 2. Arrow function (modern syntax)</span>
+<span class="kw">const</span> <span class="fn">multiply</span> = (a, b) => a * b;
+
+<span class="cm">// 3. Function with default parameter</span>
+<span class="kw">const</span> <span class="fn">greet</span> = (name = <span class="str">"stranger"</span>) => {
+  <span class="kw">return</span> <span class="str">`Hello, <span class="op">${</span>name<span class="op">}</span>!`</span>;
+};
+
+console.<span class="fn">log</span>(<span class="fn">add</span>(<span class="num">5</span>, <span class="num">3</span>));       <span class="cm">// 8</span>
+console.<span class="fn">log</span>(<span class="fn">multiply</span>(<span class="num">4</span>, <span class="num">6</span>));  <span class="cm">// 24</span>
+console.<span class="fn">log</span>(<span class="fn">greet</span>());         <span class="cm">// Hello, stranger!</span>
+console.<span class="fn">log</span>(<span class="fn">greet</span>(<span class="str">"Sarthak"</span>)); <span class="cm">// Hello, Sarthak!</span></pre>
+        </div>
+
+        <h3 id="js-dom">DOM Manipulation</h3>
+        <p>The <strong>DOM (Document Object Model)</strong> is how JavaScript talks to your HTML. You can find elements, change their content, add styles, and respond to user events — all in real time.</p>
+
+        <div class="code-block">
+          <div class="code-block-header"><span>dom.js</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm">// Select elements</span>
+<span class="kw">const</span> btn   = document.<span class="fn">querySelector</span>(<span class="str">"#myButton"</span>);
+<span class="kw">const</span> box   = document.<span class="fn">querySelector</span>(<span class="str">".output"</span>);
+
+<span class="cm">// Change content and style</span>
+box.textContent = <span class="str">"Updated text!"</span>;
+box.style.color = <span class="str">"#58A6FF"</span>;
+
+<span class="cm">// Listen for a click</span>
+btn.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, () => {
+  box.textContent = <span class="str">"Button was clicked! 🎉"</span>;
+});
+
+<span class="cm">// Create a new element</span>
+<span class="kw">const</span> para = document.<span class="fn">createElement</span>(<span class="str">"p"</span>);
+para.textContent = <span class="str">"I was created with JavaScript."</span>;
+document.body.<span class="fn">appendChild</span>(para);</pre>
+        </div>
+
+        <h3 id="js-async">Async Programming & Promises</h3>
+        <p>JavaScript is <strong>asynchronous</strong> — it can start a task (like fetching data from an API) and continue running other code while waiting for a response. This is done using <span class="inline-code">Promises</span> and <span class="inline-code">async/await</span>.</p>
+
+        <div class="code-block">
+          <div class="code-block-header"><span>async.js</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm">// Fetch data from an API using async/await</span>
+<span class="kw">async function</span> <span class="fn">getUser</span>(id) {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> response = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">`https://api.example.com/users/<span class="op">${</span>id<span class="op">}</span>`</span>);
+    <span class="kw">const</span> data = <span class="kw">await</span> response.<span class="fn">json</span>();
+    console.<span class="fn">log</span>(data.name);
+  } <span class="kw">catch</span> (error) {
+    console.<span class="fn">error</span>(<span class="str">"Error:"</span>, error);
+  }
+}
+
+<span class="fn">getUser</span>(<span class="num">1</span>); <span class="cm">// Runs without blocking other code</span></pre>
+        </div>
+
+        <div class="info-box warn">
+          <span class="info-label">⚠️ Common Beginner Mistake</span>
+          Don't use <span class="inline-code">var</span> — it has confusing scoping rules. Always prefer <span class="inline-code">const</span> by default, and use <span class="inline-code">let</span> only when you need to reassign the variable.
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ C++ ══ -->
+    <div id="cpp-section" class="lang-section">
+      <div class="article-header">
+        <span class="article-tag tag-cpp">🔷 C++</span>
+        <h2>C++: Power, Performance & Control</h2>
+        <div class="article-meta">
+          <span>By sarthak_webdev</span>
+          <span>June 2026</span>
+          <span>~15 min read</span>
+        </div>
+      </div>
+
+      <div class="toc">
+        <div class="toc-title">📋 Table of Contents</div>
+        <ol>
+          <li><a href="#cpp-what">What is C++?</a></li>
+          <li><a href="#cpp-syntax">Syntax & Structure</a></li>
+          <li><a href="#cpp-pointers">Pointers & Memory</a></li>
+          <li><a href="#cpp-oop">OOP & Classes</a></li>
+        </ol>
+      </div>
+
+      <div class="content">
+        <h3 id="cpp-what">What is C++?</h3>
+        <p>C++ is a <strong>general-purpose, compiled programming language</strong> known for its blazing speed and low-level memory control. Created by Bjarne Stroustrup in the 1980s as an extension of C, it powers game engines (Unreal Engine), operating systems, browsers, and financial systems.</p>
+        <p>If JavaScript is the language of the web, C++ is the language of <strong>performance-critical software</strong>.</p>
+
+        <div class="info-box tip">
+          <span class="info-label">💡 Where is C++ used?</span>
+          Game development (Unreal Engine, AAA games), system software (OS kernels, drivers), embedded systems, competitive programming, and high-frequency trading systems.
+        </div>
+
+        <h3 id="cpp-syntax">Syntax & Basic Structure</h3>
+        <p>Every C++ program starts with a <span class="inline-code">main()</span> function. Unlike JavaScript, C++ is <strong>statically typed</strong> — you must declare the type of every variable.</p>
+
+        <div class="code-block">
+          <div class="code-block-header"><span>basics.cpp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">#include</span> <span class="str">&lt;string&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+  <span class="cm">// Variable declarations (type must be specified)</span>
+  <span class="kw">string</span> name   = <span class="str">"Sarthak"</span>;
+  <span class="kw">int</span>    age    = <span class="num">22</span>;
+  <span class="kw">double</span> gpa    = <span class="num">3.9</span>;
+  <span class="kw">bool</span>   passed = <span class="kw">true</span>;
+
+  <span class="cm">// Output to console</span>
+  cout &lt;&lt; <span class="str">"Name: "</span> &lt;&lt; name &lt;&lt; endl;
+  cout &lt;&lt; <span class="str">"Age: "</span>  &lt;&lt; age  &lt;&lt; endl;
+
+  <span class="cm">// If-else</span>
+  <span class="kw">if</span> (passed) {
+    cout &lt;&lt; <span class="str">"Congratulations!"</span> &lt;&lt; endl;
+  } <span class="kw">else</span> {
+    cout &lt;&lt; <span class="str">"Try again."</span> &lt;&lt; endl;
+  }
+
+  <span class="kw">return</span> <span class="num">0</span>; <span class="cm">// 0 = success</span>
+}</pre>
+        </div>
+
+        <h3 id="cpp-pointers">Pointers & Memory Management</h3>
+        <p>The most powerful — and most feared — feature of C++ is <strong>manual memory management</strong> using pointers. A pointer stores the <em>memory address</em> of another variable.</p>
+
+        <div class="code-block">
+          <div class="code-block-header"><span>pointers.cpp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+  <span class="kw">int</span> x = <span class="num">42</span>;
+  <span class="kw">int</span>* ptr = &x;  <span class="cm">// ptr holds the address of x</span>
+
+  cout &lt;&lt; <span class="str">"Value of x:   "</span> &lt;&lt; x    &lt;&lt; endl; <span class="cm">// 42</span>
+  cout &lt;&lt; <span class="str">"Address of x: "</span> &lt;&lt; &x   &lt;&lt; endl; <span class="cm">// e.g. 0x7ff...</span>
+  cout &lt;&lt; <span class="str">"ptr points to:"</span> &lt;&lt; *ptr &lt;&lt; endl; <span class="cm">// 42 (dereference)</span>
+
+  <span class="cm">// Dynamic memory allocation</span>
+  <span class="kw">int</span>* heap = <span class="kw">new int</span>(<span class="num">100</span>);  <span class="cm">// allocate on heap</span>
+  cout &lt;&lt; *heap &lt;&lt; endl;      <span class="cm">// 100</span>
+  <span class="kw">delete</span> heap;                <span class="cm">// always free memory!</span>
+
+  <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+        </div>
+
+        <h3 id="cpp-oop">Object-Oriented Programming in C++</h3>
+        <p>C++ supports full OOP with <strong>classes, inheritance, polymorphism,</strong> and <strong>encapsulation</strong>. Here's a complete class example:</p>
+
+        <div class="code-block">
+          <div class="code-block-header"><span>classes.cpp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="kw">class</span> <span class="fn">Animal</span> {
+<span class="kw">private</span>:
+  string name;
+  <span class="kw">int</span> age;
+
+<span class="kw">public</span>:
+  <span class="cm">// Constructor</span>
+  <span class="fn">Animal</span>(string n, <span class="kw">int</span> a) : name(n), age(a) {}
+
+  <span class="kw">void</span> <span class="fn">speak</span>() {
+    cout &lt;&lt; name &lt;&lt; <span class="str">" makes a sound."</span> &lt;&lt; endl;
+  }
+  string <span class="fn">getName</span>() { <span class="kw">return</span> name; }
+};
+
+<span class="cm">// Inheritance</span>
+<span class="kw">class</span> <span class="fn">Dog</span> : <span class="kw">public</span> Animal {
+<span class="kw">public</span>:
+  <span class="fn">Dog</span>(string n) : <span class="fn">Animal</span>(n, <span class="num">0</span>) {}
+
+  <span class="kw">void</span> <span class="fn">speak</span>() {  <span class="cm">// override parent method</span>
+    cout &lt;&lt; <span class="fn">getName</span>() &lt;&lt; <span class="str">" says: Woof!"</span> &lt;&lt; endl;
+  }
+};
+
+<span class="kw">int</span> <span class="fn">main</span>() {
+  Dog dog(<span class="str">"Buddy"</span>);
+  dog.<span class="fn">speak</span>(); <span class="cm">// Buddy says: Woof!</span>
+  <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+        </div>
+
+        <div class="info-box warn">
+          <span class="info-label">⚠️ Memory Leak Warning</span>
+          Every <span class="inline-code">new</span> must have a matching <span class="inline-code">delete</span>. Forgetting to free memory causes memory leaks — a common C++ bug. Use smart pointers (<span class="inline-code">unique_ptr</span>, <span class="inline-code">shared_ptr</span>) in modern C++ to avoid this.
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PYTHON ══ -->
+    <div id="py-section" class="lang-section">
+      <div class="article-header">
+        <span class="article-tag tag-py">🐍 Python</span>
+        <h2>Python: Simple Syntax, Serious Power</h2>
+        <div class="article-meta">
+          <span>By sarthak_webdev</span>
+          <span>June 2026</span>
+          <span>~15 min read</span>
+        </div>
+      </div>
+
+      <div class="toc">
+        <div class="toc-title">📋 Table of Contents</div>
+        <ol>
+          <li><a href="#py-what">What is Python?</a></li>
+          <li><a href="#py-syntax">Syntax & Basics</a></li>
+          <li><a href="#py-lists">Lists & Dictionaries</a></li>
+          <li><a href="#py-oop">OOP in Python</a></li>
+        </ol>
+      </div>
+
+      <div class="content">
+        <h3 id="py-what">What is Python?</h3>
+        <p>Python is a <strong>high-level, beginner-friendly programming language</strong> famous for its clean, readable syntax. Created by Guido van Rossum in 1991, Python has become the go-to language for data science, AI, machine learning, web development, and automation.</p>
+        <p>Its philosophy: code should be <em>readable</em> and <em>beautiful</em>. Python reads almost like plain English, which makes it one of the best first languages to learn.</p>
+
+        <div class="info-box tip">
+          <span class="info-label">💡 Where is Python used?</span>
+          AI & Machine Learning (TensorFlow, PyTorch), data analysis (Pandas, NumPy), web backends (Django, FastAPI), scripting & automation, and scientific computing.
+        </div>
+
+        <h3 id="py-syntax">Syntax & Basic Concepts</h3>
+        <p>Python uses <strong>indentation</strong> (spaces/tabs) instead of curly braces to define code blocks. There are no semicolons, and variable types are inferred automatically.</p>
+
+        <div class="code-block">
+          <div class="code-block-header"><span>basics.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm"># Variables — no type declaration needed</span>
+name   = <span class="str">"Sarthak"</span>
+age    = <span class="num">22</span>
+height = <span class="num">5.11</span>
+active = <span class="kw">True</span>
+
+<span class="cm"># Print to console</span>
+<span class="fn">print</span>(<span class="str">f"Hello, {name}! You are {age} years old."</span>)
+
+<span class="cm"># If-elif-else</span>
+<span class="kw">if</span> age >= <span class="num">18</span>:
+    <span class="fn">print</span>(<span class="str">"Adult"</span>)
+<span class="kw">elif</span> age >= <span class="num">13</span>:
+    <span class="fn">print</span>(<span class="str">"Teenager"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Child"</span>)
+
+<span class="cm"># For loop</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">5</span>):
+    <span class="fn">print</span>(<span class="str">f"Count: {i}"</span>)
+
+<span class="cm"># While loop</span>
+count = <span class="num">0</span>
+<span class="kw">while</span> count < <span class="num">3</span>:
+    <span class="fn">print</span>(<span class="str">"Looping..."</span>)
+    count += <span class="num">1</span></pre>
+        </div>
+
+        <h3 id="py-lists">Lists, Dictionaries & Comprehensions</h3>
+        <p>Python's built-in data structures are powerful and easy to use. <strong>Lists</strong> are ordered collections; <strong>dictionaries</strong> store key-value pairs.</p>
+
+        <div class="code-block">
+          <div class="code-block-header"><span>data_structures.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm"># Lists</span>
+langs = [<span class="str">"JavaScript"</span>, <span class="str">"C++"</span>, <span class="str">"Python"</span>]
+langs.<span class="fn">append</span>(<span class="str">"Rust"</span>)        <span class="cm"># add item</span>
+langs.<span class="fn">remove</span>(<span class="str">"C++"</span>)         <span class="cm"># remove item</span>
+<span class="fn">print</span>(langs[<span class="num">0</span>])              <span class="cm"># "JavaScript"</span>
+<span class="fn">print</span>(langs[<span class="num">-1</span>])             <span class="cm"># "Rust" (last item)</span>
+
+<span class="cm"># List comprehension (Python superpower!)</span>
+squares = [x**<span class="num">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">6</span>)]
+<span class="fn">print</span>(squares)  <span class="cm"># [1, 4, 9, 16, 25]</span>
+
+<span class="cm"># Dictionary</span>
+student = {
+    <span class="str">"name"</span>: <span class="str">"Sarthak"</span>,
+    <span class="str">"age"</span>: <span class="num">22</span>,
+    <span class="str">"skills"</span>: [<span class="str">"HTML"</span>, <span class="str">"CSS"</span>, <span class="str">"JS"</span>]
+}
+<span class="fn">print</span>(student[<span class="str">"name"</span>])         <span class="cm"># Sarthak</span>
+student[<span class="str">"grade"</span>] = <span class="str">"A"</span>        <span class="cm"># add new key</span>
+
+<span class="cm"># Iterate over dict</span>
+<span class="kw">for</span> key, value <span class="kw">in</span> student.<span class="fn">items</span>():
+    <span class="fn">print</span>(<span class="str">f"{key}: {value}"</span>)</pre>
+        </div>
+
+        <h3 id="py-oop">Object-Oriented Programming in Python</h3>
+        <p>Python's OOP is clean and intuitive. Classes use <span class="inline-code">self</span> to refer to the current instance, and <span class="inline-code">__init__</span> is the constructor method.</p>
+
+        <div class="code-block">
+          <div class="code-block-header"><span>classes.py</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">class</span> <span class="fn">Animal</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, name, species):
+        self.name    = name
+        self.species = species
+
+    <span class="kw">def</span> <span class="fn">speak</span>(self):
+        <span class="fn">print</span>(<span class="str">f"{self.name} makes a sound."</span>)
+
+    <span class="kw">def</span> <span class="fn">__repr__</span>(self):
+        <span class="kw">return</span> <span class="str">f"Animal({self.name}, {self.species})"</span>
+
+
+<span class="cm"># Inheritance</span>
+<span class="kw">class</span> <span class="fn">Dog</span>(Animal):
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, name):
+        <span class="fn">super</span>().<span class="fn">__init__</span>(name, <span class="str">"Canis lupus"</span>)
+
+    <span class="kw">def</span> <span class="fn">speak</span>(self):  <span class="cm"># override</span>
+        <span class="fn">print</span>(<span class="str">f"{self.name} says: Woof! 🐶"</span>)
+
+
+dog = <span class="fn">Dog</span>(<span class="str">"Buddy"</span>)
+dog.<span class="fn">speak</span>()        <span class="cm"># Buddy says: Woof! 🐶</span>
+<span class="fn">print</span>(dog.species)  <span class="cm"># Canis lupus</span></pre>
+        </div>
+
+        <div class="info-box tip">
+          <span class="info-label">💡 Python Pro Tip</span>
+          Use f-strings (<span class="inline-code">f"Hello {name}"</span>) instead of string concatenation — they're faster, cleaner, and more readable. Available in Python 3.6+.
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 <a href="#">sarthak_webdev</a></span>
+  <span>Built with HTML, CSS & ❤️</span>
+  <span><a href="#">GitHub</a> · <a href="#">Twitter</a></span>
+</footer>
+
+<script>
+  function showLang(lang) {
+    document.querySelectorAll('.lang-section').forEach(s => s.classList.remove('visible'));
+    document.getElementById(lang + '-section').classList.add('visible');
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+  }
+
+  function copyCode(btn) {
+    const code = btn.closest('.code-block').querySelector('pre').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+</script>
+</body>
+</html>
